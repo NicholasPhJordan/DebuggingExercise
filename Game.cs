@@ -135,11 +135,13 @@ namespace HelloWorld
             }
 
             //Loops until the player or the enemy is dead
-            while (_playerHealth >= 0 && enemyHealth >= 0)
+            while (_playerHealth > 0 && enemyHealth > 0)
             {
                 //Displays the stats for both charactersa to the screen before the player takes their turn
                 PrintStats(_playerName, _playerHealth, _playerDamage, _playerDefense);
+                Console.WriteLine("");
                 PrintStats(enemyName, enemyHealth, enemyAttack, enemyDefense);
+                Console.WriteLine("");
 
                 //Get input from the player
                 char input = ' ';
@@ -147,8 +149,7 @@ namespace HelloWorld
                 //If input is 1, the player wants to attack. By default the enemy blocks any incoming attack
                 if (input == '1')
                 {
-                    BlockAttack(enemyHealth, _playerDamage, enemyDefense);
-                    Console.WriteLine("You dealt " + _playerDamage + " damage.");
+                    BlockAttack(enemyHealth, _playerDamage, enemyDefense, _playerName);
                     Console.Write("> ");
                     Console.ReadKey();
                 }
@@ -156,8 +157,7 @@ namespace HelloWorld
                 //called instead of simply decrementing the health by the enemy's attack value.
                 else if (input == '2')
                 {
-                    BlockAttack(_playerHealth, enemyAttack, _playerDefense);
-                    Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
+                    BlockAttack(_playerHealth, enemyAttack, _playerDefense, enemyName);
                     Console.Write("> ");
                     Console.ReadKey();
                     turnCount++;
@@ -176,14 +176,16 @@ namespace HelloWorld
         }
 
         //Decrements the health of a character. The attack value is subtracted by that character's defense
-        int BlockAttack(int opponentHealth, int attackVal, int opponentDefense)
+        int BlockAttack(int opponentHealth, int attackVal, int opponentDefense, string attackerName)
         {
-            int damage = attackVal -= opponentDefense;
-            if (damage <= 0)
+            attackVal -= opponentDefense;
+            if (attackVal < 0)
             {
-                damage = 1;
+                attackVal = 0;
             }
-            return opponentHealth -= damage;
+            Console.WriteLine(attackerName + " dealt " + attackVal + " damage.");
+            opponentHealth -= attackVal;
+            return opponentHealth;
         }
 
         //Scales up the player's stats based on the amount of turns it took in the last battle
