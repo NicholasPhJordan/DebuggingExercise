@@ -124,6 +124,7 @@ namespace HelloWorld
                     enemyAttack = 30;
                     enemyDefense = 5;
                     enemyName = "Troll";
+                    
                     break;
                 case 2:
                     enemyHealth = 200;
@@ -134,7 +135,7 @@ namespace HelloWorld
             }
 
             //Loops until the player or the enemy is dead
-            while (_playerHealth <= 0 && enemyHealth <= 0)
+            while (_playerHealth >= 0 && enemyHealth >= 0)
             {
                 //Displays the stats for both charactersa to the screen before the player takes their turn
                 PrintStats(_playerName, _playerHealth, _playerDamage, _playerDefense);
@@ -175,14 +176,14 @@ namespace HelloWorld
         }
 
         //Decrements the health of a character. The attack value is subtracted by that character's defense
-        void BlockAttack(int opponentHealth, int attackVal, int opponentDefense)
+        int BlockAttack(int opponentHealth, int attackVal, int opponentDefense)
         {
-            int damage = attackVal - opponentDefense;
-            if (damage < 0)
+            int damage = attackVal -= opponentDefense;
+            if (damage <= 0)
             {
                 damage = 1;
             }
-            opponentHealth -= damage;
+            return opponentHealth -= damage;
         }
 
         //Scales up the player's stats based on the amount of turns it took in the last battle
@@ -213,6 +214,7 @@ namespace HelloWorld
                 Console.WriteLine("2. " + option2);
                 Console.Write("> ");
                 input = Console.ReadKey().KeyChar;
+                Console.WriteLine();
             }
             return input;
         }
@@ -258,7 +260,6 @@ namespace HelloWorld
             if (_playerHealth <= 0)
             {
                 Console.WriteLine("Failure");
-                return;
             }
             //Print game over message
             Console.WriteLine("Congrats");
