@@ -150,8 +150,12 @@ namespace HelloWorld
                 if (input == '1')
                 {
                     BlockAttack(enemyHealth, _playerDamage, enemyDefense, _playerName);
+                    _playerHealth -= enemyAttack;
+                    Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
                     Console.Write("> ");
                     Console.ReadKey();
+                    turnCount++;
+                    Console.Clear();
                 }
                 //If the player decides to defend the enemy just takes their turn. However this time the block attack function is
                 //called instead of simply decrementing the health by the enemy's attack value.
@@ -163,16 +167,9 @@ namespace HelloWorld
                     turnCount++;
                     Console.Clear();
                 }
-                Console.Clear();
-                //After the player attacks, the enemy takes its turn. Since the player decided not to defend, the block attack function is not called.
-                _playerHealth -= enemyAttack;
-                Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
-                Console.Write("> ");
-                Console.ReadKey();
-                turnCount++;
             }
             //Return whether or not our player died
-            return _playerHealth <= 0;
+            return _playerHealth != 0;
         }
 
         //Decrements the health of a character. The attack value is subtracted by that character's defense
@@ -183,8 +180,8 @@ namespace HelloWorld
             {
                 attackVal = 0;
             }
-            Console.WriteLine(attackerName + " dealt " + attackVal + " damage.");
             opponentHealth -= attackVal;
+            Console.WriteLine(attackerName + " dealt " + attackVal + " damage.");
             return opponentHealth;
         }
 
@@ -261,7 +258,7 @@ namespace HelloWorld
             //If the player died print death message
             if (_playerHealth <= 0)
             {
-                Console.WriteLine("Failure");
+                Console.WriteLine("Failure to live");
             }
             //Print game over message
             Console.WriteLine("Congrats");
