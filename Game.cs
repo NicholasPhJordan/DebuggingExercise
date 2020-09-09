@@ -197,9 +197,89 @@ namespace HelloWorld
             {
                 scale += 1;
             }
-            _playerHealth += 10 * scale;
-            _playerDamage *= scale;
-            _playerDefense *= scale;
+            Console.WriteLine("Welcome to the Between. A place inbetween rooms.");
+            Console.WriteLine("What stat would you like to level up?");
+            char input = ' ';
+            input = GetInput("Health", "Damage", "Defense");
+            if (input == '1')
+            {
+                Console.WriteLine("You upgraded your health.");
+                switch(_playerName)
+                {
+                    case "Sir Kibble":
+                        _playerHealth = 120;
+                        _playerDefense = 10;
+                        _playerDamage = 40;
+                        _playerHealth += 10 * scale;
+                        break;
+                    case "Gnojoel":
+                        _playerHealth = 40;
+                        _playerDefense = 2;
+                        _playerDamage = 70;
+                        _playerHealth += 10 * scale;
+                        break;
+                    case "Joedazz":
+                        _playerHealth = 200;
+                        _playerDefense = 5;
+                        _playerDamage = 25;
+                        _playerHealth += 10 * scale;
+                        break;
+                }
+            }
+            else if (input == '2')
+            {
+                Console.WriteLine("You upgraded your damage.");
+                switch (_playerName)
+                {
+                    case "Sir Kibble":
+                        _playerHealth = 120;
+                        _playerDefense = 10;
+                        _playerDamage = 40;
+                        _playerDamage *= scale;
+                        break;
+                    case "Gnojoel":
+                        _playerHealth = 40;
+                        _playerDefense = 2;
+                        _playerDamage = 70;
+                        _playerDamage *= scale;
+                        break;
+                    case "Joedazz":
+                        _playerHealth = 200;
+                        _playerDefense = 5;
+                        _playerDamage = 25;
+                        _playerDamage *= scale;
+                        break;
+                }
+            }
+            if(input == '3')
+            {
+                Console.WriteLine("You upgraded your defense.");
+                switch (_playerName)
+                {
+                    case "Sir Kibble":
+                        _playerHealth = 120;
+                        _playerDefense = 10;
+                        _playerDamage = 40;
+                        _playerDefense *= scale;
+                        break;
+                    case "Gnojoel":
+                        _playerHealth = 40;
+                        _playerDefense = 2;
+                        _playerDamage = 70;
+                        _playerDefense *= scale;
+                        break;
+                    case "Joedazz":
+                        _playerHealth = 200;
+                        _playerDefense = 5;
+                        _playerDamage = 25;
+                        _playerDefense *= scale;
+                        break;
+                }
+            }
+            Console.WriteLine("Press any key to continue.");
+            Console.Write("> ");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         //Gets input from the player
@@ -214,6 +294,21 @@ namespace HelloWorld
             {
                 Console.WriteLine("1. " + option1);
                 Console.WriteLine("2. " + option2);
+                Console.Write("> ");
+                input = Console.ReadKey().KeyChar;
+                Console.WriteLine();
+            }
+            return input;
+        }
+
+        char GetInput(string option1, string option2, string option3)
+        {
+            char input = ' ';
+            while (input != '1' && input != '2' && input != '3')
+            {
+                Console.WriteLine("1. " + option1);
+                Console.WriteLine("2. " + option2);
+                Console.WriteLine("3. " + option3);
                 Console.Write("> ");
                 input = Console.ReadKey().KeyChar;
                 Console.WriteLine();
