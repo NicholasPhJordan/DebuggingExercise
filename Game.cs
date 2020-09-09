@@ -4,6 +4,15 @@ using System.Text;
 
 namespace HelloWorld
 {
+    struct Player
+    {
+        public int health;
+        public int damage;
+        public int defense;
+        public string name;
+        public int levelScaleMax;
+    }
+
     class Game
     {
         bool _gameOver = false;
