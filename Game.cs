@@ -15,12 +15,8 @@ namespace HelloWorld
 
     class Game
     {
+        Player player1;
         bool _gameOver = false;
-        string _playerName = "Hero";
-        int _playerHealth = 120;
-        int _playerDamage = 20;
-        int _playerDefense = 10;
-        int levelScaleMax = 5;
 
         //Displays the character selection menu. 
         void SelectCharacter()
@@ -40,22 +36,22 @@ namespace HelloWorld
                 switch (input)
                 {
                     case '1':
-                        _playerName = "Sir Kibble";
-                        _playerHealth = 120;
-                        _playerDefense = 10;
-                        _playerDamage = 40;
+                        player1.name = "Sir Kibble";
+                        player1.health = 120;
+                        player1.defense = 10;
+                        player1.damage = 40;
                         break;
                     case '2':
-                        _playerName = "Gnojoel";
-                        _playerHealth = 40;
-                        _playerDefense = 2;
-                        _playerDamage = 70;
+                        player1.name = "Gnojoel";
+                        player1.health = 40;
+                        player1.defense = 2;
+                        player1.damage = 70;
                         break;
                     case '3':
-                        _playerName = "Joedazz";
-                        _playerHealth = 200;
-                        _playerDefense = 5;
-                        _playerDamage = 25;
+                        player1.name = "Joedazz";
+                        player1.health = 200;
+                        player1.defense = 5;
+                        player1.damage = 25;
                         break;
                     //If an invalid input is selected display and input message and input over again.
                     default:
@@ -67,7 +63,7 @@ namespace HelloWorld
                 Console.Clear();
             }
             //Prints the stats of the choosen character to the screen before the game begins to give the player visual feedback
-            PrintStats(_playerName, _playerHealth, _playerDamage, _playerDefense);
+            PrintStats(player1);
             Console.WriteLine("Press any key to continue.");
             Console.Write("> ");
             Console.ReadKey();
@@ -100,7 +96,7 @@ namespace HelloWorld
             }
 
             //If the player survived the battle, level them up and then proceed to the next room.
-            if (_playerHealth > 0)
+            if (player1.health > 0)
             {
                 Console.WriteLine("Congrats you lived!");
                 Console.WriteLine("Press any key to continue.");
@@ -119,41 +115,42 @@ namespace HelloWorld
         bool StartBattle(int roomNum, ref int turnCount)
         {
             //initialize default enemy stats
-            int enemyHealth = 0;
-            int enemyAttack = 0;
-            int enemyDefense = 0;
-            string enemyName = "";
+            Player playerEnemy;
+            playerEnemy.health = 0;
+            playerEnemy.damage = 0;
+            playerEnemy.defense = 0;
+            playerEnemy.name = " ";
             //Changes the enemy's default stats based on our current room number. 
             //This is how we make it seem as if the player is fighting different enemies
             switch (roomNum)
             {
                 case 0:
-                    enemyHealth = 100;
-                    enemyAttack = 20;
-                    enemyDefense = 5;
-                    enemyName = "Wizard";
+                    playerEnemy.health = 100;
+                    playerEnemy.damage = 20;
+                    playerEnemy.defense = 5;
+                    playerEnemy.name = "Wizard";
                     break;
                 case 1:
-                    enemyHealth = 80;
-                    enemyAttack = 30;
-                    enemyDefense = 5;
-                    enemyName = "Troll";
+                    playerEnemy.health = 80;
+                    playerEnemy.damage = 30;
+                    playerEnemy.defense = 5;
+                    playerEnemy.name = "Troll";
                     
                     break;
                 case 2:
-                    enemyHealth = 200;
-                    enemyAttack = 40;
-                    enemyDefense = 10;
-                    enemyName = "Giant";
+                    playerEnemy.health = 200;
+                    playerEnemy.damage = 40;
+                    playerEnemy.defense = 10;
+                    playerEnemy.name = "Giant";
                     break;
             }
 
             //Loops until the player or the enemy is dead
-            while (_playerHealth > 0 && enemyHealth > 0)
+            while (player1.health > 0 && playerEnemy.health > 0)
             {
                 //Displays the stats for both charactersa to the screen before the player takes their turn
-                PrintStats(_playerName, _playerHealth, _playerDamage, _playerDefense);
-                PrintStats(enemyName, enemyHealth, enemyAttack, enemyDefense);
+                PrintStats(player1);
+                PrintStats(playerEnemy);
 
                 //Get input from the player
                 char input = ' ';
@@ -161,8 +158,8 @@ namespace HelloWorld
                 //If input is 1, the player wants to attack. By default the enemy blocks any incoming attack
                 if (input == '1')
                 {
-                    BlockAttack(ref enemyHealth, _playerDamage, enemyDefense, _playerName);
-                    _playerHealth -= enemyAttack;
+                    BlockAttack(ref playerEnemy.health, player1.damage, playerEnemy.defense, player1.name);
+                    player1.health -= playerEnemy.damage;
                     Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
                     Console.Write("> ");
                     Console.ReadKey();
@@ -213,75 +210,75 @@ namespace HelloWorld
             if (input == '1')
             {
                 Console.WriteLine("You upgraded your health.");
-                switch(_playerName)
+                switch(player1.name)
                 {
                     case "Sir Kibble":
-                        _playerHealth = 120;
-                        _playerDefense = 10;
-                        _playerDamage = 40;
-                        _playerHealth += 10 * scale;
+                        player1.health = 120;
+                        player1.defense = 10;
+                        player1.damage = 40;
+                        player1.health += 10 * scale;
                         break;
                     case "Gnojoel":
-                        _playerHealth = 40;
-                        _playerDefense = 2;
-                        _playerDamage = 70;
-                        _playerHealth += 10 * scale;
+                        player1.health = 40;
+                        player1.defense = 2;
+                        player1.damage = 70;
+                        player1.health += 10 * scale;
                         break;
                     case "Joedazz":
-                        _playerHealth = 200;
-                        _playerDefense = 5;
-                        _playerDamage = 25;
-                        _playerHealth += 10 * scale;
+                        player1.health = 200;
+                        player1.defense = 5;
+                        player1.damage = 25;
+                        player1.health += 10 * scale;
                         break;
                 }
             }
             else if (input == '2')
             {
                 Console.WriteLine("You upgraded your damage.");
-                switch (_playerName)
+                switch (player1.name)
                 {
                     case "Sir Kibble":
-                        _playerHealth = 120;
-                        _playerDefense = 10;
-                        _playerDamage = 40;
-                        _playerDamage *= scale;
+                        player1.health = 120;
+                        player1.defense = 10;
+                        player1.damage = 40;
+                        player1.damage *= scale;
                         break;
                     case "Gnojoel":
-                        _playerHealth = 40;
-                        _playerDefense = 2;
-                        _playerDamage = 70;
-                        _playerDamage *= scale;
+                        player1.health = 40;
+                        player1.defense = 2;
+                        player1.damage = 70;
+                        player1.damage *= scale;
                         break;
                     case "Joedazz":
-                        _playerHealth = 200;
-                        _playerDefense = 5;
-                        _playerDamage = 25;
-                        _playerDamage *= scale;
+                        player1.health = 200;
+                        player1.defense = 5;
+                        player1.damage = 25;
+                        player1.damage *= scale;
                         break;
                 }
             }
             if(input == '3')
             {
                 Console.WriteLine("You upgraded your defense.");
-                switch (_playerName)
+                switch (player1.name)
                 {
                     case "Sir Kibble":
-                        _playerHealth = 120;
-                        _playerDefense = 10;
-                        _playerDamage = 40;
-                        _playerDefense *= scale;
+                        player1.health = 120;
+                        player1.defense = 10;
+                        player1.damage = 40;
+                        player1.damage *= scale;
                         break;
                     case "Gnojoel":
-                        _playerHealth = 40;
-                        _playerDefense = 2;
-                        _playerDamage = 70;
-                        _playerDefense *= scale;
+                        player1.health = 40;
+                        player1.defense = 2;
+                        player1.damage = 70;
+                        player1.damage *= scale;
                         break;
                     case "Joedazz":
-                        _playerHealth = 200;
-                        _playerDefense = 5;
-                        _playerDamage = 25;
-                        _playerDefense *= scale;
+                        player1.health = 200;
+                        player1.defense = 5;
+                        player1.damage = 25;
+                        player1.damage *= scale;
                         break;
                 }
             }
@@ -326,12 +323,12 @@ namespace HelloWorld
         }
 
         //Prints the stats given in the parameter list to the console
-        void PrintStats(string name, int health, int damage, int defense)
+        void PrintStats(Player player)
         {
-            Console.WriteLine("\n" + name);
-            Console.WriteLine("Health: " + health);
-            Console.WriteLine("Damage: " + damage);
-            Console.WriteLine("Defense: " + defense);
+            Console.WriteLine("\n" + player.name);
+            Console.WriteLine("Health: " + player.health);
+            Console.WriteLine("Damage: " + player.damage);
+            Console.WriteLine("Defense: " + player.defense);
         }
 
         //Run the game
@@ -363,7 +360,7 @@ namespace HelloWorld
         public void End()
         {
             //If the player died print death message
-            if (_playerHealth <= 0)
+            if (player1.health <= 0)
             {
                 Console.WriteLine("Failure to live");
             }
