@@ -17,6 +17,7 @@ namespace HelloWorld
     {
         Player player1;
         bool _gameOver = false;
+        Player playerEnemy;
 
         //Displays the character selection menu. 
         void SelectCharacter()
@@ -115,7 +116,6 @@ namespace HelloWorld
         bool StartBattle(int roomNum, ref int turnCount)
         {
             //initialize default enemy stats
-            Player playerEnemy;
             playerEnemy.health = 0;
             playerEnemy.damage = 0;
             playerEnemy.defense = 0;
@@ -160,7 +160,7 @@ namespace HelloWorld
                 {
                     BlockAttack(ref playerEnemy.health, player1.damage, playerEnemy.defense, player1.name);
                     player1.health -= playerEnemy.damage;
-                    Console.WriteLine(enemyName + " dealt " + enemyAttack + " damage.");
+                    Console.WriteLine(playerEnemy.name + " dealt " + playerEnemy.damage + " damage.");
                     Console.Write("> ");
                     Console.ReadKey();
                     turnCount++;
@@ -170,7 +170,7 @@ namespace HelloWorld
                 //called instead of simply decrementing the health by the enemy's attack value.
                 else if (input == '2')
                 {
-                    BlockAttack(ref _playerHealth, enemyAttack, _playerDefense, enemyName);
+                    BlockAttack(ref player1.health, playerEnemy.damage, player1.defense, playerEnemy.name);
                     Console.Write("> ");
                     Console.ReadKey();
                     turnCount++;
@@ -178,7 +178,7 @@ namespace HelloWorld
                 }
             }
             //Return whether or not our player died
-            return _playerHealth != 0;
+            return player1.health != 0;
         }
 
         //Decrements the health of a character. The attack value is subtracted by that character's defense
@@ -198,7 +198,7 @@ namespace HelloWorld
         void Upgrade(int turnCount)
         {
             //Subtract the amount of turns from our maximum level scale to get our current level scale
-            int scale = levelScaleMax - turnCount;
+            int scale = player1.levelScaleMax - turnCount;
             if (scale <= 0)
             {
                 scale += 1;
