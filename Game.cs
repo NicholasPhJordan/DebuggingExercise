@@ -129,9 +129,10 @@ namespace HelloWorld
             Console.Write("> ");
             Console.ReadKey();
             Console.Clear();
+            char input = ' ';
             while (player1.health > 0 && player2.health > 0)
             {
-                char input = ' ';
+                input = ' ';
                 while (input != '1' && input != '2')
                 {
                     GetBattleStats();
@@ -202,7 +203,31 @@ namespace HelloWorld
                     continue;
                 }
             }
-            _gameOver = true;
+            Console.WriteLine(player2.name + " WON!!");
+            input = ' ';
+            while (input != '1' && input != '2')
+            {
+                Console.WriteLine("Would you like to player again?");
+                input = GetInput("Yes", "No");
+                switch (input)
+                {
+                    case '1':
+                        Console.WriteLine("Press any key to continue");
+                        Console.Write("> ");
+                        Console.ReadKey();
+                        Console.Clear();
+                        Introduction();
+                        Battle();
+                        break;
+                    case '2':
+                        Console.WriteLine("Press any key to continue");
+                        Console.Write("> ");
+                        Console.ReadKey();
+                        Console.Clear();
+                        _gameOver = true;
+                        break;
+                }
+            }
         }
 
         void GetBattleStats()
@@ -567,7 +592,6 @@ namespace HelloWorld
         public void End()
         {
 
-            Console.WriteLine(player2.name + " WON!!");
             Console.WriteLine("GAME OVER");
 
             /*
