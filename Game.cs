@@ -4,17 +4,215 @@ using System.Text;
 
 namespace HelloWorld
 {
-    struct Player
+    /*struct Player
     {
         public int health;
         public int damage;
         public int defense;
         public string name;
         public int levelScaleMax;
+    }*/
+
+    struct Player
+    {
+        public string name;
+        public float health;
+    }
+
+    struct Item
+    {
+        public string name;
+        public float damage;
     }
 
     class Game
     {
+        bool _gameOver = false;
+        Player player1;
+        Player player2;
+        Item weapon1;
+        Item weapon2;
+
+        void Introduction()
+        {
+            Console.WriteLine("Hello Gamers!!");
+            Console.WriteLine("Player 1 please give your name.");
+            Console.Write("> ");
+            player1.name = Console.ReadLine();
+            Console.WriteLine(player1.name + " ...wow what a great name.");
+            Console.WriteLine("Press any key to continue");
+            Console.Write("> ");
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("Player 2 please give your name.");
+            Console.Write("> ");
+            player2.name = Console.ReadLine();
+            Console.WriteLine("Hello " + player2.name + ", what a beautiful name!");
+            Console.WriteLine("Press any key to continue");
+            Console.Write("> ");
+            Console.ReadKey();
+            Console.Clear();
+            char input = ' ';
+            while (input != '1' && input != '2' && input != '3')
+            {
+                Console.WriteLine("Player 1, please select a weapon.");
+                input = GetInput("Sword", "Daggers", "Staff");
+                switch (input)
+                {
+                    case '1':
+                        Console.WriteLine("Wow you chose the sword. How basic.");
+                        weapon1.name = "Sword";
+                        weapon1.damage = 10.0f;
+                        player1.health = 100.0f;
+                        break;
+                    case '2':
+                        Console.WriteLine("You chose the daggers, bet you think you're cool.");
+                        weapon1.name = "Daggers";
+                        weapon1.damage = 15.0f;
+                        player1.health = 80.0f;
+                        break;
+                    case '3':
+                        Console.WriteLine("Really? The staff? Okay.");
+                        weapon1.name = "Staff";
+                        weapon1.damage = 20.0f;
+                        player1.health = 60.0f;
+                        break;
+                }
+            }
+            Console.WriteLine("Press any key to continue");
+            Console.Write("> ");
+            Console.ReadKey();
+            Console.Clear();
+            input = ' ';
+            while (input != '1' && input != '2' && input != '3')
+            {
+                Console.WriteLine("Player 2, please select a weapon.");
+                input = GetInput("Sword", "Daggers", "Staff");
+                switch (input)
+                {
+                    case '1':
+                        Console.WriteLine("You chose the sword. A fine choice!");
+                        weapon2.name = "Sword";
+                        weapon2.damage = 10.0f;
+                        player2.health = 100.0f;
+                        break;
+                    case '2':
+                        Console.WriteLine("You chose the daggers. Sharp and fast. Good choice.");
+                        weapon2.name = "Daggers";
+                        weapon2.damage = 15.0f;
+                        player2.health = 80.0f;
+                        break;
+                    case '3':
+                        Console.WriteLine("You chose the staff. Good luck mighty wizard!");
+                        weapon2.name = "Staff";
+                        weapon2.damage = 20.0f;
+                        player2.health = 60.0f;
+                        break;
+                }
+            }
+            Console.WriteLine("Press any key to continue");
+            Console.Write("> ");
+            Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("Players! Get Ready for a mighty battle!");
+            Console.WriteLine("Good Luck " + player2.name + "!");
+            Console.WriteLine("Press any key to start");
+            Console.Write("> ");
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        void Battle()
+        {
+            Console.WriteLine(player1.name + ": " + player1.health + "          " + player2.name + ": " + player2.health);
+            Console.WriteLine("______________________________");
+            Console.WriteLine("");
+            Console.WriteLine(player2.name + " goes first!");
+            Console.Write("> ");
+            Console.ReadKey();
+            Console.Clear();
+            while (player1.health > 0 && player2.health > 0)
+            {
+                char input = ' ';
+                while (input != '1' && input != '2')
+                {
+                    Console.WriteLine(player1.name + ": " + player1.health + "          " + player2.name + ": " + player2.health);
+                    Console.WriteLine("______________________________");
+                    Console.WriteLine("");
+                    Console.WriteLine("Player 2's turn");
+                    Console.WriteLine("What will you do?");
+                    input = GetInput("Attack", "Kill " + player1.name);
+                    switch (input)
+                    {
+                        case '1':
+                            Console.WriteLine(player2.name + " dealt " + weapon2.damage + " damage!");
+                            player1.health -= weapon2.damage;
+                            Console.WriteLine("Press any key to continue");
+                            Console.Write("> ");
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                        case '2':
+                            Console.WriteLine("You kill " + player1.name + ". Congrats!!");
+                            Console.WriteLine("You win!");
+                            player1.health = 0.0f;
+                            Console.WriteLine("Press any key to continue");
+                            Console.Write("> ");
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+                    }
+                }
+                if (player1.health > 0)
+                {
+                    input = ' ';
+                    while (input != '1' && input != '2')
+                    {
+                        Console.WriteLine(player1.name + ": " + player1.health + "          " + player2.name + ": " + player2.health);
+                        Console.WriteLine("______________________________");
+                        Console.WriteLine("");
+                        Console.WriteLine("Player 1's turn");
+                        Console.WriteLine("What will you do?");
+                        input = GetInput("Attack", "Kill yourself");
+                        switch (input)
+                        {
+                            case '1':
+                                Console.WriteLine(player1.name + " dealt " + weapon1.damage + " damage!");
+                                player2.health -= weapon1.damage;
+                                Console.WriteLine("Press any key to continue");
+                                Console.Write("> ");
+                                Console.ReadKey();
+                                Console.Clear();
+                                break;
+                            case '2':
+                                Console.WriteLine("Im sorry it had to end this way.");
+                                player1.health = 0.0f;
+                                Console.WriteLine("Press any key to continue");
+                                Console.Write("> ");
+                                Console.ReadKey();
+                                Console.Clear();
+                                break;
+                        }
+                    }
+                }
+                if (player2.health <= 0.0f)
+                {
+                    Console.WriteLine(player2.name + " died.");
+                    Console.WriteLine("Let's try that again.");
+                    player2.health = 1000000;
+                    weapon2.damage = 1000000;
+                    Console.WriteLine("Press any key to continue");
+                    Console.Write("> ");
+                    Console.ReadKey();
+                    Console.Clear();
+                    continue;
+                }
+            }
+            _gameOver = true;
+        }
+        
+        /*
+
         Player player1;
         bool _gameOver = false;
         Player playerEnemy;
@@ -288,6 +486,8 @@ namespace HelloWorld
             Console.Clear();
         }
 
+        */
+
         //Gets input from the player
         //Out's the char variable given. This variables stores the player's input choice.
         //The parameters option1 and option 2 displays the players current chpices to the screen
@@ -322,6 +522,8 @@ namespace HelloWorld
             return input;
         }
 
+        /*
+
         //Prints the stats given in the parameter list to the console
         void PrintStats(Player player)
         {
@@ -330,6 +532,8 @@ namespace HelloWorld
             Console.WriteLine("Damage: " + player.damage);
             Console.WriteLine("Defense: " + player.defense);
         }
+
+        */
 
         //Run the game
         public void Run()
@@ -347,18 +551,26 @@ namespace HelloWorld
         //Performed once when the game begins
         public void Start()
         {
-            SelectCharacter();
+            Introduction();
+            //SelectCharacter();
         }
 
         //Repeated until the game ends
         public void Update()
         {
-            ClimbLadder(0);
+            Battle();
+            //ClimbLadder(0);
         }
 
         //Performed once when the game ends
         public void End()
         {
+
+            Console.WriteLine(player2.name + " WON!!");
+            Console.WriteLine("GAME OVER");
+
+            /*
+
             //If the player died print death message
             if (player1.health <= 0)
             {
@@ -366,6 +578,9 @@ namespace HelloWorld
             }
             //Print game over message
             Console.WriteLine("Congrats the game is over");
+
+            */
+
         }
     }
 }
