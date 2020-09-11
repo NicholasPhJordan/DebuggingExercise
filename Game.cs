@@ -124,9 +124,7 @@ namespace HelloWorld
 
         void Battle()
         {
-            Console.WriteLine(player1.name + ": " + player1.health + "          " + player2.name + ": " + player2.health);
-            Console.WriteLine("______________________________");
-            Console.WriteLine("");
+            GetBattleStats();
             Console.WriteLine(player2.name + " goes first!");
             Console.Write("> ");
             Console.ReadKey();
@@ -136,9 +134,7 @@ namespace HelloWorld
                 char input = ' ';
                 while (input != '1' && input != '2')
                 {
-                    Console.WriteLine(player1.name + ": " + player1.health + "          " + player2.name + ": " + player2.health);
-                    Console.WriteLine("______________________________");
-                    Console.WriteLine("");
+                    GetBattleStats();
                     Console.WriteLine("Player 2's turn");
                     Console.WriteLine("What will you do?");
                     input = GetInput("Attack", "Kill " + player1.name);
@@ -168,9 +164,7 @@ namespace HelloWorld
                     input = ' ';
                     while (input != '1' && input != '2')
                     {
-                        Console.WriteLine(player1.name + ": " + player1.health + "          " + player2.name + ": " + player2.health);
-                        Console.WriteLine("______________________________");
-                        Console.WriteLine("");
+                        GetBattleStats();
                         Console.WriteLine("Player 1's turn");
                         Console.WriteLine("What will you do?");
                         input = GetInput("Attack", "Kill yourself");
@@ -209,6 +203,13 @@ namespace HelloWorld
                 }
             }
             _gameOver = true;
+        }
+
+        void GetBattleStats()
+        {
+            Console.WriteLine(player1.name + ": " + player1.health + "          " + player2.name + ": " + player2.health);
+            Console.WriteLine("______________________________");
+            Console.WriteLine("");
         }
         
         /*
